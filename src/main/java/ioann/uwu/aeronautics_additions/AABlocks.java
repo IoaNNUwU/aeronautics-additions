@@ -4,7 +4,7 @@ import com.simibubi.create.AllItems;
 import com.simibubi.create.foundation.data.*;
 import com.tterrag.registrate.providers.RegistrateRecipeProvider;
 import com.tterrag.registrate.util.entry.BlockEntry;
-import ioann.uwu.aeronautics_additions.blocks.jet_engine.JetEngineBlock;
+import ioann.uwu.aeronautics_additions.blocks.jet_engine.TurbineBlock;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.world.level.block.SoundType;
@@ -13,7 +13,7 @@ public class AABlocks {
 
     private static final CreateRegistrate REGISTRATE = AeronauticsAdditions.getRegistrate();
 
-    public static final BlockEntry<JetEngineBlock> JET_ENGINE = REGISTRATE.block("jet_engine", JetEngineBlock::new)
+    public static final BlockEntry<TurbineBlock> JET_ENGINE = REGISTRATE.block("turbine", TurbineBlock::new)
             .initialProperties(SharedProperties::wooden)
             .transform(TagGen.axeOrPickaxe())
             .properties(p -> p

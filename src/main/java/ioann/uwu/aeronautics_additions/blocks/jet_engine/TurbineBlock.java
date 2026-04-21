@@ -12,9 +12,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class JetEngineBlock extends BasePropellerBlock {
+public class TurbineBlock extends BasePropellerBlock {
 
-    public JetEngineBlock(Properties properties) {
+    public TurbineBlock(Properties properties) {
         super(properties);
     }
 

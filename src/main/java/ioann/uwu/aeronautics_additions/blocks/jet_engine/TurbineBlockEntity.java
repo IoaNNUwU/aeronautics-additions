@@ -5,9 +5,9 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class JetEngineBlockEntity extends BasePropellerBlockEntity {
+public class TurbineBlockEntity extends BasePropellerBlockEntity {
 
-    public JetEngineBlockEntity(BlockEntityType<?> typeIn, BlockPos pos, BlockState state) {
+    public TurbineBlockEntity(BlockEntityType<?> typeIn, BlockPos pos, BlockState state) {
         super(typeIn, pos, state);
     }
 

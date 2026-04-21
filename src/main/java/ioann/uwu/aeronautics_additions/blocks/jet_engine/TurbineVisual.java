@@ -28,7 +28,7 @@ import java.util.function.Consumer;
 import static com.simibubi.create.content.kinetics.base.DirectionalKineticBlock.FACING;
 import static dev.eriksonn.aeronautics.content.blocks.propeller.small.BasePropellerBlock.REVERSED;
 
-public class JetEngineVisual extends OrientedRotatingVisual<JetEngineBlockEntity> implements SimpleDynamicVisual {
+public class TurbineVisual extends OrientedRotatingVisual<TurbineBlockEntity> implements SimpleDynamicVisual {
 
     protected final Vector3f rotationAxis;
     protected final Quaternionf blockOrientation;
@@ -37,7 +37,7 @@ public class JetEngineVisual extends OrientedRotatingVisual<JetEngineBlockEntity
     private final OrientedInstance propellerClockwise;
     private final OrientedInstance propellerAntiClockwise;
 
-    public JetEngineVisual(VisualizationContext context, JetEngineBlockEntity blockEntity, float partialTick) {
+    public TurbineVisual(VisualizationContext context, TurbineBlockEntity blockEntity, float partialTick) {
         super(context, blockEntity, partialTick, Direction.SOUTH, blockEntity.getBlockState().getValue(FACING).getOpposite(), Models.partial(AllPartialModels.SHAFT_HALF));
 
         Direction facing = this.blockState.getValue(BlockStateProperties.FACING);

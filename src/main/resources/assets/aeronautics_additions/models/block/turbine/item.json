@@ -4,7 +4,7 @@
 	"parent": "block/block",
 	"texture_size": [32, 32],
 	"textures": {
-		"0": "aeronautics_additions:block/jet_engine",
+		"0": "aeronautics_additions:block/turbine",
 		"2": "aeronautics_additions:block/turbine_blades",
 		"particle": "create:block/industrial_iron_block"
 	},

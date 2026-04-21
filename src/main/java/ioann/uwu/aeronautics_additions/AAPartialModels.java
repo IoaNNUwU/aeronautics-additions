@@ -7,12 +7,12 @@ public class AAPartialModels {
 
     public static final PartialModel TURBINE_BLADES = PartialModel.of(ResourceLocation.tryBuild(
             AeronauticsAdditions.MOD_ID,
-            "block/jet_engine/turbine_blades"
+            "block/turbine/turbine_blades"
     ));
 
     public static final PartialModel TURBINE_BLADES_COUNTER = PartialModel.of(ResourceLocation.tryBuild(
             AeronauticsAdditions.MOD_ID,
-            "block/jet_engine/turbine_blades_counter"
+            "block/turbine/turbine_blades_counter"
     ));
 
     public static void init() {}
