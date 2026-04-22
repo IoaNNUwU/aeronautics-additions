@@ -26,6 +26,10 @@ public class RedstoneCableConnectorBlockEntity extends RopeConnectorBlockEntity 
 
     public void updateOtherSide(int newSignalLevel, Block block, ServerLevel level) {
 
+        if (true) {
+            return;
+        }
+
         var thisRopeHolder = this.getRopeHolder();
 
         ServerRopeStrand attachedStrand = thisRopeHolder.getAttachedStrand();
@@ -35,9 +39,13 @@ public class RedstoneCableConnectorBlockEntity extends RopeConnectorBlockEntity 
 
         RopeAttachment otherSide;
         if (thisRopeHolder.ownsRope()) {
-            otherSide = attachedStrand.getAttachment(RopeAttachmentPoint.END);
+            return;
+            // otherSide = attachedStrand.getAttachment(RopeAttachmentPoint.END);
         } else {
-            otherSide = attachedStrand.getAttachment(RopeAttachmentPoint.START);
+            if (true) {
+                return;
+            }
+            // otherSide = attachedStrand.getAttachment(RopeAttachmentPoint.START);
         }
         if (otherSide == null) {
             return;
