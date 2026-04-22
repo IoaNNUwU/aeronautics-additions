@@ -1,6 +1,7 @@
 package ioann.uwu.aeronautics_additions.blocks.jet_engine;
 
 import dev.eriksonn.aeronautics.content.blocks.propeller.small.BasePropellerBlockEntity;
+import ioann.uwu.aeronautics_additions.config.AAConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -13,17 +14,17 @@ public class TurbineBlockEntity extends BasePropellerBlockEntity {
 
     @Override
     public double getConfigThrust() {
-        return 3.0f; // default 1.0
+        return AAConfig.TURBINE_THRUST.get();
     }
 
     @Override
     public double getConfigAirflow() {
-        return 1.0f; // default 0.1
+        return AAConfig.TURBINE_AIRFLOW.get();
     }
 
     @Override
     public float getRadius() {
-        return 2.0f;
+        return AAConfig.TURBINE_RADIUS.get();
     }
 
     @Override
