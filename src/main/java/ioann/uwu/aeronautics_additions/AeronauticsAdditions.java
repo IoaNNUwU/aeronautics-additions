@@ -49,6 +49,8 @@ public class AeronauticsAdditions {
 
         modContainer.registerConfig(ModConfig.Type.COMMON, AAConfig.CONFIG_SPEC);
         modContainer.registerExtensionPoint(IConfigScreenFactory.class, ConfigurationScreen::new);
+
+        AALang.initLang(REGISTRATE.get());
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
