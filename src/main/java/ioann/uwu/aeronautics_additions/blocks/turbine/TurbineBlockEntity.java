@@ -1,4 +1,4 @@
-package ioann.uwu.aeronautics_additions.blocks.jet_engine;
+package ioann.uwu.aeronautics_additions.blocks.turbine;
 
 import dev.eriksonn.aeronautics.content.blocks.propeller.small.BasePropellerBlockEntity;
 import ioann.uwu.aeronautics_additions.config.AAConfig;

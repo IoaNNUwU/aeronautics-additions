@@ -1,4 +1,4 @@
-package ioann.uwu.aeronautics_additions.blocks.jet_engine;
+package ioann.uwu.aeronautics_additions.blocks.turbine;
 
 import dev.eriksonn.aeronautics.content.blocks.propeller.small.BasePropellerBlock;
 import dev.eriksonn.aeronautics.content.blocks.propeller.small.BasePropellerBlockEntity;
@@ -20,18 +20,18 @@ public class TurbineBlock extends BasePropellerBlock {
 
     @Override
     public BlockEntityType<? extends BasePropellerBlockEntity> getBlockEntityType() {
-        return AABlockEntityTypes.JET_ENGINE.get();
+        return AABlockEntityTypes.TURBINE.get();
     }
 
     @Override
     public VoxelShape getShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
-        return JET_ENGINE.get(pState.getValue(FACING));
+        return TURBINE.get(pState.getValue(FACING));
     }
 
     // TODO: Fix black shadow appearing randomly
-    private static final VoxelShaper JET_ENGINE = new AeroBlockShapes.Builder(box(0, 0, 0, 16, 16, 16)).forDirectional();
+    private static final VoxelShaper TURBINE = new AeroBlockShapes.Builder(box(0, 0, 0, 16, 16, 16)).forDirectional();
 
-    private static final VoxelShaper JET_ENGINE1 = new AeroBlockShapes.Builder(box(2, 8, 2, 14, 18, 14))
+    private static final VoxelShaper TURBINE1 = new AeroBlockShapes.Builder(box(2, 8, 2, 14, 18, 14))
             .add(box(3, 8, 1, 13, 18, 15))
             .add(box(1, 8, 3, 15, 18, 13))
             .add(box(5, 8, 0, 11, 18, 16))

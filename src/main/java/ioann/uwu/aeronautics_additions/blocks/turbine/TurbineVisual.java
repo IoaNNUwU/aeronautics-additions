@@ -1,4 +1,4 @@
-package ioann.uwu.aeronautics_additions.blocks.jet_engine;
+package ioann.uwu.aeronautics_additions.blocks.turbine;
 
 import com.simibubi.create.AllPartialModels;
 import com.simibubi.create.content.kinetics.base.OrientedRotatingVisual;

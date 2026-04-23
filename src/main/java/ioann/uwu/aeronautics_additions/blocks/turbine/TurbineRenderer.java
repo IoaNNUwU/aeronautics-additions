@@ -1,4 +1,4 @@
-package ioann.uwu.aeronautics_additions.blocks.jet_engine;
+package ioann.uwu.aeronautics_additions.blocks.turbine;
 
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 import dev.eriksonn.aeronautics.content.blocks.propeller.small.SimplePropellerRenderer;
