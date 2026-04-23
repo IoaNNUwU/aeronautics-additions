@@ -15,5 +15,20 @@ public class AAPartialModels {
             "block/turbine/turbine_blades_counter"
     ));
 
+    public static final PartialModel REDSTONE_CABLE = PartialModel.of(ResourceLocation.tryBuild(
+            AeronauticsAdditions.MOD_ID,
+            "block/redstone_cable_connector/cable"
+    ));
+
+    public static final PartialModel REDSTONE_CABLE_KNOT = PartialModel.of(ResourceLocation.tryBuild(
+            AeronauticsAdditions.MOD_ID,
+            "block/redstone_cable_connector/knot"
+    ));
+
+    public static final PartialModel REDSTONE_HANDLE_KNOT = PartialModel.of(ResourceLocation.tryBuild(
+            AeronauticsAdditions.MOD_ID,
+            "block/redstone_cable_connector/handle_knot"
+    ));
+
     public static void init() {}
 }

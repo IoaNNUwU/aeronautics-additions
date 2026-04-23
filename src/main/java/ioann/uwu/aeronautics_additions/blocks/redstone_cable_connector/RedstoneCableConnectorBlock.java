@@ -84,10 +84,11 @@ public class RedstoneCableConnectorBlock extends AbstractDirectionalAxisBlock im
         return SHAPE.get(state.getValue(FACING), state.getValue(AXIS_ALONG_FIRST_COORDINATE));
     }
 
+    private static final DirectionalAxisShaper PHYSICS_COLLIDER = DirectionalAxisShaper.make(SimBlockShapes.ROPE_CONNECTOR_COLLIDER);
+
     @Override
     public VoxelShape getSubLevelCollisionShape(BlockGetter blockGetter, BlockState state) {
-        // TODO: Add simpler Physics Collider
-        return SHAPE.get(state.getValue(FACING), state.getValue(AXIS_ALONG_FIRST_COORDINATE));
+        return PHYSICS_COLLIDER.get(state.getValue(FACING), state.getValue(AXIS_ALONG_FIRST_COORDINATE));
     }
 
     @Override

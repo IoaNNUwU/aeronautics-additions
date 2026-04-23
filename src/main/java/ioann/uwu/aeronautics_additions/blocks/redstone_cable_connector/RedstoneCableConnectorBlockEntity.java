@@ -9,10 +9,8 @@ import dev.ryanhcode.sable.sublevel.SubLevel;
 import dev.simulated_team.simulated.content.blocks.rope.RopeStrandHolderBehavior;
 import dev.simulated_team.simulated.content.blocks.rope.RopeStrandHolderBlockEntity;
 import dev.simulated_team.simulated.content.blocks.rope.rope_connector.RopeConnectorBlock;
-import dev.simulated_team.simulated.content.blocks.rope.rope_connector.RopeConnectorBlockEntity;
 import dev.simulated_team.simulated.content.blocks.rope.strand.client.ClientRopeStrand;
 import dev.simulated_team.simulated.content.blocks.rope.strand.server.RopeAttachment;
-import dev.simulated_team.simulated.content.blocks.rope.strand.server.RopeAttachmentPoint;
 import dev.simulated_team.simulated.content.blocks.rope.strand.server.ServerRopeStrand;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -31,19 +29,19 @@ public class RedstoneCableConnectorBlockEntity extends SmartBlockEntity implemen
 
     public static final double RENDER_BOUNDING_BOX_INFLATION = 3.0;
 
-    private RopeStrandHolderBehavior ropeHolder;
+    private RopeStrandHolderBehavior redstoneCableHolder;
 
     public RedstoneCableConnectorBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
     }
 
-    public RopeStrandHolderBehavior getRopeHolder() {
-        return this.ropeHolder;
+    public RopeStrandHolderBehavior getRopeHolderBehavior() {
+        return this.redstoneCableHolder;
     }
 
     @Override
     public void addBehaviours(final List<BlockEntityBehaviour> behaviours) {
-        behaviours.add(this.ropeHolder = new RopeStrandHolderBehavior(this));
+        behaviours.add(this.redstoneCableHolder = new RopeStrandHolderBehavior(this));
     }
 
     @Override
@@ -57,8 +55,8 @@ public class RedstoneCableConnectorBlockEntity extends SmartBlockEntity implemen
 
     @Override
     public AABB getRenderBoundingBox() {
-        final ClientRopeStrand rope = this.ropeHolder.getClientStrand();
-        if (rope != null && this.ropeHolder.ownsRope()) {
+        final ClientRopeStrand rope = this.redstoneCableHolder.getClientStrand();
+        if (rope != null && this.redstoneCableHolder.ownsRope()) {
             final AABB bounds = rope.getBounds();
 
             if (bounds == null) {
@@ -73,7 +71,7 @@ public class RedstoneCableConnectorBlockEntity extends SmartBlockEntity implemen
 
     @Override
     public RopeStrandHolderBehavior getBehavior() {
-        return this.ropeHolder;
+        return this.redstoneCableHolder;
     }
 
     @Override
@@ -97,7 +95,7 @@ public class RedstoneCableConnectorBlockEntity extends SmartBlockEntity implemen
             return;
         }
 
-        var thisRopeHolder = this.getRopeHolder();
+        var thisRopeHolder = this.getRopeHolderBehavior();
 
         ServerRopeStrand attachedStrand = thisRopeHolder.getAttachedStrand();
         if (attachedStrand == null) {

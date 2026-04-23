@@ -5,8 +5,9 @@ import com.simibubi.create.AllBlocks;
 import com.simibubi.create.foundation.blockEntity.renderer.SafeBlockEntityRenderer;
 import dev.simulated_team.simulated.content.blocks.rope.RopeStrandHolderBehavior;
 import dev.simulated_team.simulated.content.blocks.rope.rope_connector.RopeConnectorBlock;
-import dev.simulated_team.simulated.content.blocks.rope.strand.client.RopeStrandRenderer;
 import dev.simulated_team.simulated.index.SimPartialModels;
+import ioann.uwu.aeronautics_additions.AAPartialModels;
+import ioann.uwu.aeronautics_additions.client.RedstoneCableRenderer;
 import net.createmod.catnip.math.AngleHelper;
 import net.createmod.catnip.render.CachedBuffers;
 import net.createmod.catnip.render.SuperByteBuffer;
@@ -26,14 +27,14 @@ public class RedstoneCableConnectorRenderer extends SafeBlockEntityRenderer<Reds
     @Override
     protected void renderSafe(RedstoneCableConnectorBlockEntity blockEntity, float partialTicks, PoseStack poseStack, MultiBufferSource buffer, int light, int overlay) {
 
-        RopeStrandRenderer.render(blockEntity, blockEntity.getRopeHolder(), partialTicks, poseStack, buffer);
+        RedstoneCableRenderer.render(blockEntity, blockEntity.getRopeHolderBehavior(), partialTicks, poseStack, buffer);
 
-        final RopeStrandHolderBehavior holder = blockEntity.getRopeHolder();
+        RopeStrandHolderBehavior holder = blockEntity.getRopeHolderBehavior();
 
-        if ((!holder.isAttached()) && (!blockEntity.isVirtual() || !blockEntity.getRopeHolder().renderAttached)) {
+        if ((!holder.isAttached()) && (!blockEntity.isVirtual() || !blockEntity.getRopeHolderBehavior().renderAttached)) {
             return;
         }
-        final SuperByteBuffer knot = CachedBuffers.partialFacing(SimPartialModels.ROPE_CONNECTOR_KNOT, AllBlocks.ROPE.getDefaultState(), Direction.NORTH);
+        final SuperByteBuffer knot = CachedBuffers.partialFacing(AAPartialModels.REDSTONE_HANDLE_KNOT, AllBlocks.ROPE.getDefaultState(), Direction.NORTH);
 
         final BlockPos blockPos = blockEntity.getBlockPos();
         final BlockState state = blockEntity.getBlockState();

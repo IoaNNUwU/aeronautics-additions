@@ -1,9 +1,9 @@
 package ioann.uwu.aeronautics_additions.items;
 
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
+import dev.simulated_team.simulated.content.blocks.rope.RopeStrandHolderBehavior;
 import dev.simulated_team.simulated.data.advancements.SimAdvancements;
 import dev.simulated_team.simulated.index.SimDataComponents;
-import ioann.uwu.aeronautics_additions.blocks.redstone_cable_connector.RedstoneCableHolderBehavior;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.sounds.SoundEvents;
@@ -27,7 +27,7 @@ public class RedstoneCableItem extends Item {
         boolean validLocation = false;
 
         if (level.getBlockEntity(blockPos) instanceof SmartBlockEntity smartBlockEntity) {
-            RedstoneCableHolderBehavior behavior = smartBlockEntity.getBehaviour(RedstoneCableHolderBehavior.TYPE);
+            RopeStrandHolderBehavior behavior = smartBlockEntity.getBehaviour(RopeStrandHolderBehavior.TYPE);
 
             if (behavior != null && !behavior.isAttached()) {
                 validLocation = true;
@@ -36,10 +36,10 @@ public class RedstoneCableItem extends Item {
         return validLocation;
     }
 
-    public static RedstoneCableHolderBehavior getRedstoneCableHolder(Level level, BlockPos blockPos) {
-        RedstoneCableHolderBehavior holder = null;
+    public static RopeStrandHolderBehavior getRedstoneCableHolder(Level level, BlockPos blockPos) {
+        RopeStrandHolderBehavior holder = null;
         if (level.getBlockEntity(blockPos) instanceof SmartBlockEntity smartBlockEntity) {
-            RedstoneCableHolderBehavior behavior = smartBlockEntity.getBehaviour(RedstoneCableHolderBehavior.TYPE);
+            RopeStrandHolderBehavior behavior = smartBlockEntity.getBehaviour(RopeStrandHolderBehavior.TYPE);
 
             if (behavior != null) {
                 holder = behavior;
@@ -89,12 +89,12 @@ public class RedstoneCableItem extends Item {
     }
 
     private boolean attachRedstoneCable(Level level, BlockPos origin, BlockPos clickedPos) {
-        RedstoneCableHolderBehavior originHolder = getRedstoneCableHolder(level, origin);
+        RopeStrandHolderBehavior originHolder = getRedstoneCableHolder(level, origin);
         if (originHolder == null) {
             return false;
         }
 
-        RedstoneCableHolderBehavior clickedHolder = getRedstoneCableHolder(level, origin);
+        RopeStrandHolderBehavior clickedHolder = getRedstoneCableHolder(level, clickedPos);
         if (clickedHolder == null) {
             return false;
         }
