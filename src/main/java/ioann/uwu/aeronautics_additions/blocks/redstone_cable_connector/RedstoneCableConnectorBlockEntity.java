@@ -6,8 +6,12 @@ import dev.simulated_team.simulated.content.blocks.rope.RopeStrandHolderBehavior
 import dev.simulated_team.simulated.content.blocks.rope.RopeStrandHolderBlockEntity;
 import dev.simulated_team.simulated.content.blocks.rope.rope_connector.RopeConnectorBlock;
 import dev.simulated_team.simulated.content.blocks.rope.strand.client.ClientRopeStrand;
+import dev.simulated_team.simulated.content.blocks.rope.strand.server.RopeAttachment;
+import dev.simulated_team.simulated.content.blocks.rope.strand.server.RopeAttachmentPoint;
+import dev.simulated_team.simulated.content.blocks.rope.strand.server.ServerRopeStrand;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -102,5 +106,33 @@ public class RedstoneCableConnectorBlockEntity extends SmartBlockEntity implemen
         }
 
         return false;
+    }
+
+    /// Assume this method always called on rope owner
+    public void notifyOtherEndSignalChanged(int signal) {
+
+        RopeStrandHolderBehavior rope = this.ropeHolder;
+
+        if (!rope.ownsRope() || rope.getOwnedStrand() == null) {
+            return;
+        }
+
+        Level level = this.getLevel();
+        if (level == null) {
+            return;
+        }
+
+        ServerRopeStrand strand = rope.getOwnedStrand();
+        if (strand != null) {
+            RopeAttachment target = strand.getAttachment(RopeAttachmentPoint.END);
+            if (target != null) {
+                BlockPos targetBlockPos = target.blockAttachment();
+
+                BlockState targetConnector = level.getBlockState(targetBlockPos);
+                BlockState newConnector = targetConnector.setValue(RedstoneCableConnectorBlock.POWER, signal);
+
+                level.setBlock(targetBlockPos, newConnector, Block.UPDATE_ALL);
+            }
+        }
     }
 }

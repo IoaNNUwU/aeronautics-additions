@@ -2,7 +2,6 @@ package ioann.uwu.aeronautics_additions.blocks.redstone_cable_connector;
 
 import com.mojang.serialization.MapCodec;
 import com.simibubi.create.api.contraption.BlockMovementChecks;
-import com.simibubi.create.content.redstone.link.RedstoneLinkBlock;
 import com.simibubi.create.foundation.block.IBE;
 import com.simibubi.create.impl.contraption.BlockMovementChecksImpl;
 import dev.ryanhcode.sable.api.block.BlockSubLevelAssemblyListener;
@@ -16,7 +15,6 @@ import dev.simulated_team.simulated.util.DirectionalAxisShaper;
 import ioann.uwu.aeronautics_additions.AABlockEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.ItemInteractionResult;
@@ -27,10 +25,12 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.DirectionalBlock;
+import net.minecraft.world.level.block.RedStoneWireBlock;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -44,6 +44,7 @@ public class RedstoneCableConnectorBlock extends AbstractDirectionalAxisBlock im
 {
 
     public static final BooleanProperty SOURCE = BooleanProperty.create("source");
+    public static final IntegerProperty POWER = RedStoneWireBlock.POWER;
 
     static {
         BlockMovementChecksImpl.registerAttachedCheck(
@@ -62,7 +63,10 @@ public class RedstoneCableConnectorBlock extends AbstractDirectionalAxisBlock im
 
     public RedstoneCableConnectorBlock(Properties properties) {
         super(properties);
-        registerDefaultState(defaultBlockState().setValue(SOURCE, false));
+        registerDefaultState(defaultBlockState()
+                .setValue(SOURCE, false)
+                .setValue(POWER, 0)
+        );
     }
 
     public static final MapCodec<RedstoneCableConnectorBlock> CODEC = simpleCodec(RedstoneCableConnectorBlock::new);
@@ -130,23 +134,32 @@ public class RedstoneCableConnectorBlock extends AbstractDirectionalAxisBlock im
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
         super.createBlockStateDefinition(pBuilder);
-        pBuilder.add(SOURCE);
+        pBuilder.add(SOURCE, POWER);
     }
 
     @Override
     protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block p_60512_, BlockPos p_60513_, boolean p_60514_) {
-
-        if (level instanceof ServerLevel serverLevel) {
-
-            // TODO
-
-            /*
-            int bestSignal = calculateTargetStrength(level, pos);
-
-            if (level.getBlockEntity(pos) instanceof RedstoneCableConnectorBlockEntity conn) {
-                conn.updateOtherSide(bestSignal, this, serverLevel);
+        if (!level.isClientSide) {
+            if (state.getValue(SOURCE)) {
+                if (level.getBlockEntity(pos) instanceof RedstoneCableConnectorBlockEntity conn) {
+                    int signal = level.getBestNeighborSignal(pos);
+                    conn.notifyOtherEndSignalChanged(signal);
+                }
             }
-             */
         }
+    }
+
+    @Override
+    protected int getSignal(BlockState state, BlockGetter level, BlockPos pos, Direction direction) {
+        if (state.getValue(SOURCE)) {
+            return 0;
+        }
+
+        return state.getValue(POWER);
+    }
+
+    @Override
+    public boolean canConnectRedstone(BlockState state, BlockGetter level, BlockPos pos, @Nullable Direction direction) {
+        return true;
     }
 }
