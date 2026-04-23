@@ -1,4 +1,4 @@
-package ioann.uwu.aeronautics_additions;
+package ioann.uwu.aeronautics_additions.datagen;
 
 import com.simibubi.create.foundation.data.CreateRegistrate;
 

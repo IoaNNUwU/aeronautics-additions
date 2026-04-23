@@ -10,6 +10,7 @@ import dev.simulated_team.simulated.index.SimBlocks;
 import dev.simulated_team.simulated.index.SimTags;
 import ioann.uwu.aeronautics_additions.blocks.turbine.TurbineBlock;
 import ioann.uwu.aeronautics_additions.blocks.redstone_cable_connector.RedstoneCableConnectorBlock;
+import ioann.uwu.aeronautics_additions.datagen.AADatagen;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
@@ -45,7 +46,7 @@ public class AABlocks {
 
     public static final BlockEntry<RedstoneCableConnectorBlock> REDSTONE_CABLE_CONNECTOR = REGISTRATE.block("redstone_cable_connector", RedstoneCableConnectorBlock::new)
             .initialProperties(SharedProperties::stone)
-            .blockstate(SimBlockStateGen::directionalAxisBlock)
+            .blockstate(AADatagen::directionalConnectorBlock)
             .properties(BlockBehaviour.Properties::noOcclusion)
             .tag(BlockTags.MINEABLE_WITH_PICKAXE, BlockTags.MINEABLE_WITH_AXE, AllTags.AllBlockTags.BRITTLE.tag, SimTags.Blocks.SUPER_LIGHT)
             // .blockstate(BlockStateGen.directionalBlockProvider(true))

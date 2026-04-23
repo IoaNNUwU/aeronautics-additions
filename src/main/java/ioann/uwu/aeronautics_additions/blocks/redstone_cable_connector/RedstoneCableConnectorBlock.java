@@ -2,6 +2,7 @@ package ioann.uwu.aeronautics_additions.blocks.redstone_cable_connector;
 
 import com.mojang.serialization.MapCodec;
 import com.simibubi.create.api.contraption.BlockMovementChecks;
+import com.simibubi.create.content.redstone.link.RedstoneLinkBlock;
 import com.simibubi.create.foundation.block.IBE;
 import com.simibubi.create.impl.contraption.BlockMovementChecksImpl;
 import dev.ryanhcode.sable.api.block.BlockSubLevelAssemblyListener;
@@ -26,11 +27,10 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.DirectionalBlock;
-import net.minecraft.world.level.block.RedStoneWireBlock;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -43,7 +43,7 @@ public class RedstoneCableConnectorBlock extends AbstractDirectionalAxisBlock im
         BlockSubLevelCollisionShape
 {
 
-    public static final IntegerProperty POWER = RedStoneWireBlock.POWER;
+    public static final BooleanProperty SOURCE = BooleanProperty.create("source");
 
     static {
         BlockMovementChecksImpl.registerAttachedCheck(
@@ -60,11 +60,9 @@ public class RedstoneCableConnectorBlock extends AbstractDirectionalAxisBlock im
         );
     }
 
-    private boolean shouldSignal = true;
-
     public RedstoneCableConnectorBlock(Properties properties) {
         super(properties);
-        registerDefaultState(defaultBlockState().setValue(POWER, 0));
+        registerDefaultState(defaultBlockState().setValue(SOURCE, false));
     }
 
     public static final MapCodec<RedstoneCableConnectorBlock> CODEC = simpleCodec(RedstoneCableConnectorBlock::new);
@@ -132,7 +130,7 @@ public class RedstoneCableConnectorBlock extends AbstractDirectionalAxisBlock im
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
         super.createBlockStateDefinition(pBuilder);
-        pBuilder.add(POWER);
+        pBuilder.add(SOURCE);
     }
 
     @Override
@@ -140,64 +138,15 @@ public class RedstoneCableConnectorBlock extends AbstractDirectionalAxisBlock im
 
         if (level instanceof ServerLevel serverLevel) {
 
+            // TODO
+
+            /*
             int bestSignal = calculateTargetStrength(level, pos);
 
             if (level.getBlockEntity(pos) instanceof RedstoneCableConnectorBlockEntity conn) {
                 conn.updateOtherSide(bestSignal, this, serverLevel);
             }
+             */
         }
-    }
-
-    private int calculateTargetStrength(Level level, BlockPos blockPos) {
-        this.shouldSignal = false;
-        int i = level.getBestNeighborSignal(blockPos);
-        this.shouldSignal = true;
-
-        int j = 0;
-        if (i < 15) {
-
-            for (Direction direction : Direction.Plane.HORIZONTAL) {
-                BlockPos blockpos = blockPos.relative(direction);
-                BlockState blockstate = level.getBlockState(blockpos);
-                j = Math.max(j, this.getWireSignal(blockstate));
-                BlockPos blockpos1 = blockpos.above();
-
-                if (blockstate.isRedstoneConductor(level, blockpos) && !level.getBlockState(blockpos1).isRedstoneConductor(level, blockpos1)) {
-                    j = Math.max(j, this.getWireSignal(level.getBlockState(blockpos.above())));
-                } else if (!blockstate.isRedstoneConductor(level, blockpos)) {
-                    j = Math.max(j, this.getWireSignal(level.getBlockState(blockpos.below())));
-                }
-            }
-        }
-
-        return Math.max(i, j - 1);
-    }
-
-    private int getWireSignal(BlockState blockState) {
-        return blockState.is(this) ? blockState.getValue(POWER) : 0;
-    }
-
-    @Override
-    public boolean canConnectRedstone(BlockState state, BlockGetter level, BlockPos pos, @Nullable Direction direction) {
-        return true;
-    }
-
-    @Override
-    protected int getSignal(BlockState state, BlockGetter level, BlockPos pos, Direction direction) {
-
-        if (this.shouldSignal) {
-            return state.getValue(POWER);
-        }
-        return 0;
-    }
-
-    @Override
-    protected int getDirectSignal(BlockState state, BlockGetter level, BlockPos pos, Direction direction) {
-        return !this.shouldSignal ? 0 : state.getSignal(level, pos, direction);
-    }
-
-    @Override
-    protected boolean isSignalSource(BlockState state) {
-        return this.shouldSignal;
     }
 }

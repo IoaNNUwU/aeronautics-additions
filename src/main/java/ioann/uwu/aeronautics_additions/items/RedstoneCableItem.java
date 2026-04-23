@@ -4,6 +4,7 @@ import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import dev.simulated_team.simulated.content.blocks.rope.RopeStrandHolderBehavior;
 import dev.simulated_team.simulated.data.advancements.SimAdvancements;
 import dev.simulated_team.simulated.index.SimDataComponents;
+import ioann.uwu.aeronautics_additions.blocks.redstone_cable_connector.RedstoneCableConnectorBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.sounds.SoundEvents;
@@ -48,6 +49,14 @@ public class RedstoneCableItem extends Item {
         return holder;
     }
 
+    public static RedstoneCableConnectorBlockEntity getBe(Level level, BlockPos blockPos) {
+        if (level.getBlockEntity(blockPos) instanceof RedstoneCableConnectorBlockEntity conn) {
+            return conn;
+        } else {
+            return null;
+        }
+    }
+
     @Override
     public InteractionResult useOn(UseOnContext ctx) {
         BlockPos blockPos = ctx.getClickedPos();
@@ -89,17 +98,17 @@ public class RedstoneCableItem extends Item {
     }
 
     private boolean attachRedstoneCable(Level level, BlockPos origin, BlockPos clickedPos) {
-        RopeStrandHolderBehavior originHolder = getRedstoneCableHolder(level, origin);
+        RedstoneCableConnectorBlockEntity originHolder = getBe(level, origin);
         if (originHolder == null) {
             return false;
         }
 
-        RopeStrandHolderBehavior clickedHolder = getRedstoneCableHolder(level, clickedPos);
+        RedstoneCableConnectorBlockEntity clickedHolder = getBe(level, clickedPos);
         if (clickedHolder == null) {
             return false;
         }
 
-        if (originHolder.createRope(clickedHolder)) {
+        if (originHolder.createCable(clickedHolder)) {
             level.playSound(null, origin, SoundEvents.WOOL_PLACE, SoundSource.BLOCKS, 0.5f, 1f);
             level.playSound(null, origin, SoundEvents.WOOL_PLACE, SoundSource.BLOCKS, 0.5f, 1f);
             return true;
